@@ -48,7 +48,7 @@ foreach($arrRes[1] as $sPageUrl)
 	{
 		echo "下载视频片段{$nIdx}：{$aChapterInfo->url}\r\n" ;
 		`wget "{$aChapterInfo->url}" -O "files/{$aInfo->title}-{$nIdx}.mp4"` ;
-		$arrVideos [] = '"files/{$aInfo->title}-{$nIdx}.mp4"' ;
+		$arrVideos [] = "\"files/{$aInfo->title}-{$nIdx}.mp4\"" ;
 	}
 	
 	// 合并视频
