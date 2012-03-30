@@ -43,10 +43,17 @@ foreach($arrRes[1] as $sPageUrl)
 	$aInfo = json_decode($sContent) ;
 	
 	echo "\r\n开始下载视频：{$aInfo->title}\r\n" ;
-	
+	$arrVideos = array() ;
 	foreach($aInfo->video->chapters as $nIdx=>$aChapterInfo)
 	{
 		echo "下载视频片段{$nIdx}：{$aChapterInfo->url}\r\n" ;
 		`wget "{$aChapterInfo->url}" -O "files/{$aInfo->title}-{$nIdx}.mp4"` ;
+		$arrVideos [] = "files/{$aInfo->title}-{$nIdx}.mp4" ;
 	}
+	
+	// 合并视频
+	echo "\r\n合并视频 ... \r\n" ;
+	$sVideos = implode(' ',$arrVideos) ;
+	`mencoder -oac mp3lame -ovc copy -idx -o "files/{$aInfo->title}.mp4" {$sVideos}` ;
+	echo "\r\n\r\n" ;
 }
