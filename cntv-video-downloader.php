@@ -2,7 +2,7 @@
 <?php 
 
 $sFileDir = dirname(__FILE__).'/files' ;
-if(is_dir($sFileDir))
+if(!is_dir($sFileDir))
 {
 	mkdir($sFileDir) ;
 }
