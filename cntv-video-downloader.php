@@ -21,6 +21,14 @@ $sUrl = "http://vdn.apps.cntv.cn/api/getHttpVideoInfo.do?pid={$sVideoId}&tz=-8&f
 echo "请求视频信息，id：{$sVideoId}/ url：{$sUrl}\r\n" ;
 
 $sContent = file_get_contents($sUrl) ;
-print_r(json_decode($sContent)) ;
-//var multiVariate = "CN26,982c572c29d44dba16bf2b8da2795c27,20111116101821,,,,,,,科教台社会,C33295,CCTV-10,0-节目,粗切,,百家讲坛,CN26";
+$aInfo = json_decode($sContent) ;
+
+echo "\r\n\r\n开始下载视频：{$aInfo->title}\r\n" ;
+
+foreach($aInfo->video->chapters as $nIdx=>$aChapterInfo)
+{
+	echo "下载视频片段{$nIdx}：{$aChapterInfo->url}\r\n" ;
+	`wget "{$aChapterInfo->url}" -o files/{$aInfo->title}-{$nIdx}.mp4` ;
+}
+
 
