@@ -1,6 +1,11 @@
 #! /usr/bin/php5
 <?php 
 
+$sFileDir = dirname(__FILE__).'/files' ;
+if(is_dir($sFileDir))
+{
+	mkdir($sFileDir) ;
+}
 
 if( empty($argv[1]) )
 {
@@ -28,7 +33,7 @@ echo "\r\n\r\n开始下载视频：{$aInfo->title}\r\n" ;
 foreach($aInfo->video->chapters as $nIdx=>$aChapterInfo)
 {
 	echo "下载视频片段{$nIdx}：{$aChapterInfo->url}\r\n" ;
-	`wget "{$aChapterInfo->url}" -o "files/{$aInfo->title}-{$nIdx}.mp4"` ;
+	`wget "{$aChapterInfo->url}" -O "files/{$aInfo->title}-{$nIdx}.mp4"` ;
 }
 
 
